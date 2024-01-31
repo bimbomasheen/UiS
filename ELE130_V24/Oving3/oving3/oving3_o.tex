@@ -1,0 +1,53 @@
+\runningheader{Oppgave o), frivillig}{}{Side \thepage\ av \numpages}
+
+% ********************************************************
+% oppgave o) 
+% ******************************************************** 
+\item   {\bf Demonstrasjon av oppsampling}
+
+  Oppsampling  (eng: {\it upsamling}) er en teknikk for å rekonstruere
+  samplede signaler.   I denne
+  oppgaven skal vi demonstrere dette for en tenkt problemstilling hvor
+  du har en motor med en såkalt encoder som kan måle vinkelposisjonen
+  til motoren. Anta
+  at motoren roterer ca.\ 10 runder, og at du sampler
+  vinkelposisjonen for hver {\tt delta\_phi=260}$^{\circ}$, og at
+  dette skjer med et 
+  tidsskrittet på {\tt T\_s=0.2}~sekund. Dette gir en vinkelhastighet på
+  \begin{equation}
+\omega_{d} = \frac{260^{\circ}}{0.2}= 1300^{\circ}/\text{s}    
+\end{equation}
+hvor subskript $d$ impliserer ``degrees''. 
+Ved å beregne og plotte
+  \begin{equation}
+y(t) = \sin(\omega_{d}{\cdot} t)    
+  \end{equation}
+så kan du  få et visuelt bilde på rotasjonen som har
+foregått.  Vær klar over at sinus-funksjonen forventer
+en vinkel oppgitt i radianer og ikke grader som over, og at vi strengt
+tatt burde skrevet
+  \begin{equation}
+y(t) = \sin\Bigl(\omega_{d}{\cdot} t {\cdot} \frac{2\pi}{360} \Bigl)    
+  \end{equation}
+Når det er sagt, så har Matlab en  {\tt sind()}-funksjon som tar
+grader som argument.
+
+
+Som du vil se fra kurven øverst til høyre når du kjører koden,
+så er problemet at vi sampler såpass sjelden at det ser ut 
+som motoren kun har rotert et par runder. Etter at du trykker OK, vil
+de se at vi legger     
+inn fiktive, men egentlig høyst reelle, vinkelmålinger og tidspunkt
+mellom de samplede  målingene. På den måten utvider vi datasettet
+vårt, og grunnen til at vi vet at dette går fint er at motoren har
+rotert jevnt i én retning. 
+
+Matlabfunksjonen for å oppsample er
+\fbox{\tt interp} som interpolerer 
+verdier mellom de avleste vinkelposisjonsmålingene.
+
+Lek gjerne med verdien på {\tt delta\_phi}, fra 30$^{\circ}$ og
+oppover. Ved hvilken verdi går det galt?
+
+Som innlevering kan du ta med de signalene du har lekt med og samtidig
+forklare hva som skjer.

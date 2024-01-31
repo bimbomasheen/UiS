@@ -1,0 +1,49 @@
+\runningheader{Oppgave l), frivillig}{}{Side \thepage\ av \numpages}
+% ********************************************************
+% oppgave l) 
+% ******************************************************** 
+\item
+{\bf IIR-basert lavpass- og høypassfiltrering av {\it Chirp}-signal}
+
+ I denne oppgaven skal vi ta utgangspunkt i sinussignalet fra
+ ligning~\eqref{eq:3}  skrevet med tidsvarierende frekvens $f(t)$ som
+\begin{align}
+  x(t)  &= 0.1{\cdot}\sin\bigl(2 \pi f(t) {\cdot}t\bigr) + 0.2
+\end{align}
+Vi skal lage et  {\it chirp}-signal $x(t)$
+som går fra $f_{\text{initial}}$~[Hz] til
+$f_{\text{target}}$~[Hz] i løpet av 100 sekund.
+Den tidsavhengige frekvensen $f(t)$ kan formuleres som
+\begin{equation}
+  \label{eq:1f}
+  f(t) =
+  f_{\text{initial}}+\Biggl(\frac{f_{\text{target}}-f_{\text{initial}}}{t_{\text{target}}}\Biggl)
+  \cdot t
+\end{equation}
+hvor
+\begin{itemize}
+      \setlength\itemsep{0mm}
+\item  $f_{\text{initial}}$ [Hz] tilsvarer startfrekvensen 
+\item  $f_{\text{target}}$ [Hz] tilsvarer sluttfrekvensen
+\item  $t_{\text{target}}$ [s] er tidspunktet når frekvensen er
+  $f_{\text{target}}$ 
+\end{itemize}
+
+Du skal bruke to forskjellige varianter av første ordens IIR-filter, nemlig
+  \begin{align}
+ y_{k} &= (1-\alpha)  {\cdot}y_{k-1} +  \alpha {\cdot}x_{k}\label{eq:lavpass}\\
+ y_{k} &= a_{1}  {\cdot}y_{k-1} +  b_{0}{\cdot}x_{k} + b_{1}{\cdot}x_{k-1}\label{eq:hoypass}
+\end{align}
+Du kjenner godt til den første varianten i ligning~\eqref{eq:lavpass} som egentlig er et
+{\it lavpassfilter}. Det betyr at lave frekvenser passerer gjennom, mens høye frekvenser
+stoppes i filteret.
+
+Filteret i ligning~\eqref{eq:hoypass} er et filter som kan
+fjerne DC-ledd (konstantledd), og er dermed et såkalt {\it
+  høypassfilter}. Lave frekvenser, som egentlig kan betraktes som et
+langsomtvarierende konstantledd fjernes og høye frekvenser slippes
+gjennom. Ved å velge like verdier for 
+$b_{0}$ og $b_{1}$, men med motsatt fortegn, så filtreres faktisk
+DC-leddet helt bort!
+Ferdigstill og kjør koden i skallfilen. Ta med figuren i innleveringen din.
+

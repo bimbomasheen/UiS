@@ -1,0 +1,62 @@
+%%
+%% Dette er figurepath.sty
+%%
+%% Denne pakken gjør det mulig å legge figurer i vilkårlige directory
+%% 
+%% Det er tre alternative bruksmåter:
+%% 1) Bruke path'en som opsjon når pakken kalles
+%%    Eks:
+%%      \usepackage[./Fig/,./Plot/]{figurepath}
+%%
+%% 2) Sette path'en vha. kommandoen 'setfigurepath' (figurepath.sty må
+%%    selvfølgelig også kalles)
+%%    Eks:
+%%      :
+%%      \usepackage{..,figurepath}
+%%      :
+%%      \setfigurepath{{/home/navn/mitt/fig/dir/}{./Figurer/}}
+%%      :
+%%
+%% 3) Legge til directorys i path'en vha 'addfigurepath'
+%%    Eks:
+%%      :
+%%      \usepackage{..,figurepath}
+%%      :
+%%      \setfigurepath{./Figurer/}% Kan sløyfes
+%%      \addfigurepath{./Plot}
+%%      \addfigurepath{/home/brukernavn/figur/dir/}
+%%      :
+%%
+%% Petter Lågstad, Tue Mar 12 12:49:52 1996, Ver: 1.2
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{figurepath}
+\def\setfigurepath#1{\edef\input@path{#1}\edef\Ginput@path{#1}}
+\newif\ifpgf@firstadd \pgf@firstaddtrue
+\def\addfigurepath#1{\ifpgf@firstadd 
+  \edef\input@path{ {\input@path}%
+    {#1}}
+  \edef\Ginput@path{{\Ginput@path}%
+    {#1}}
+  \pgf@firstaddfalse
+  \else
+  \edef\input@path{\input@path%
+    {#1}}
+  \edef\Ginput@path{\Ginput@path%
+    {#1}}
+  \fi
+  \typeout{\input@path}
+}
+\def\input@path{./}
+\let\Ginput@path\input@path
+\newif\ifpgf@opt \pgf@optfalse
+\edef\path@option{}
+\DeclareOption*{
+  \pgf@opttrue
+  \edef\path@option{\path@option%
+    {\CurrentOption}}
+  }
+\ProcessOptions
+\ifpgf@opt  
+  \setfigurepath{\path@option} 
+\fi
+\endinput

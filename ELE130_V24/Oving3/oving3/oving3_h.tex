@@ -1,0 +1,73 @@
+\runningheader{Oppgave h)}{}{Side \thepage\ av \numpages}
+% ********************************************************
+% oppgave h) 
+% ******************************************************** 
+\item
+  {\bf Fenomenet nedfolding}
+
+\label{oppg:h}
+
+  I denne oppgaven tar vi utgangspunkt i hvordan sampling blir utført
+  som vist i kapittel 7.2 i kompendiet. 
+  Hensikten med oppgaven er å demonstrere hvilken betydningen
+  samplingsfrekvensen  $f_{s}$~[Hz] har ved sampling av signaler som
+  består av forskjellige frekvenser $f$~[Hz].  Vi skal derfor bruke
+  følgende 5 cosinussignal
+\begin{align}
+  x_{1}(t) & =   \cos(2\pi f_{1} {\cdot}t)  \label{eq:U1} \\
+  x_{2}(t) & =   \cos(2 \pi f_{2} {\cdot}t)  \label{eq:U2} \\
+  x_{3}(t) & =   \cos(2\pi f_{3} {\cdot}t)  \label{eq:U3}\\
+  x_{4}(t) & =   \cos(2\pi f_{4} {\cdot}t)  \label{eq:U4}\\
+  x_{5}(t) & =   \cos(2\pi f_{5} {\cdot}t)  \label{eq:U5}
+\end{align}
+  hvor vi benytter følgende frekvenser 
+\begin{equation}
+  f_{1} = 0.1,  ~ f_{2}= 0.3, ~ f_{3}= 0.5, ~ f_{4}= 0.9 ~\text{og}~f_{5}= 1.3
+  ~\text{Hz} \notag
+\end{equation}
+Som du ser i skallfilen lager vi først 
+den ``kontinuerlige'' tidsvektoren \fbox{\tt tid}  ved å benytte et
+veldig kort tidsskritt \fbox{\tt delta\_t = 0.001}.
+
+Deretter lages  vektoren \fbox{\tt t} med samplingstidspunkt som
+representerer de tidspunktene hvor målingene blir tatt. Basert på
+tidsvektorene {\tt tid} og {\tt t} lages det deretter  
+en {\it analog} og en {\it diskret} versjon av alle fem signalene
+\fbox{\tt x\_1} til \fbox{\tt x\_5}. Til slutt summeres alle de analoge signalene til
+signalet \fbox{\tt x\_a} og alle de diskret signalene til signalet
+\fbox{\tt x\_d}. På denne måten kan du kan se effekten av
+samplingsfrekvensen \fbox{\tt f\_s} på et sammensatt 
+og mer reelt signal (ikke bare et rent cosinussignal).
+%{\color{red}Svar på følgende spørsmål:}
+\begin{itemize}
+\item 
+ Hvor stor er samplingsperioden $T_{s}$ for den valgte  
+  samplingsfrekvensen $f_{s}{=}0.6$~Hz?
+\item 
+ Hvor mange elementer er det i signalet \fbox{\tt x\_a} og
+ i signalet \fbox{\tt x\_d}?
+\item 
+ Forklar hva figuren viser? 
+\item 
+  Hvilke signal ser det ut som vi sampler i \fbox{\tt subplot(7,1,2)} til \fbox{\tt subplot(7,1,5)}?
+  Avles periodetidene $T_{p}$ fra de blå stiplede kurvene og beregn
+  de tilsynelatende frekvensene for de diskret signalene.
+  Sammenlign med frekvensene for de 
+  analoge signalene $x_{2}(t)$ til $x_{5}(t)$. 
+\item 
+ Hva skjer dersom du spesifserer samplingsfrekvensen som
+ $f_{s}{=}1$~Hz? 
+
+\item 
+  Hva skjer dersom du spesifserer samplingsfrekvensen som
+  $f_{s}{=}1.8$~Hz? 
+
+\item 
+   Hva skjer dersom du spesifserer samplingsfrekvensen som
+   $f_{s}{=}2.6$~Hz? 
+
+\item  Forklar hva som skjer når samplingsfrekvensen øker.
+
+
+
+\end{itemize}

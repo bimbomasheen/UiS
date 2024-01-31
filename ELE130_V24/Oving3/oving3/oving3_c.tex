@@ -1,0 +1,41 @@
+\runningheader{Oppgave c), frivillig}{}{Side \thepage\ av \numpages}
+% ********************************************************
+% oppgave c) 
+% ********************************************************  
+\item
+{\bf Numerisk integrasjon og derivasjon for hånd}
+\label{oppg:c}
+
+For å få litt eksamenstrening, skal du gjøre numerisk integrasjon og
+  derivasjon for hånd basert på et begrenset datasett. 
+  Vi tar utgangspunkt i de fem første tidspunktene i $t_{k}$ gitt som
+  \begin{equation}
+    \label{eq:2}
+  t_{k}=[0,~0.4,~0.8,~1.2,~1.6,~2]    
+  \end{equation}
+De tilhørende  verdiene for  $u_{k}$ er 
+  \begin{align}
+    \label{eq:1g}
+    u_{k} &= 2{\cdot} t_{k}^{2} \\
+    & = [0,~    0.32,~    1.28,~    2.88,~    5.12, ~8] 
+  \end{align}
+
+  \begin{itemize}
+  \item 
+  Bruk {\it Eulers forovermetode} 
+  til manuelt å beregne det numeriske integralet av
+  $u_{k}$, som betyr å finne 
+  \begin{equation}
+    \label{eq:1}
+    y_{k}  =  y_{k-1} +  T_s {\cdot} u_{k-1}, 
+    \quad \forall~ k=2,\ldots ,6, \quad \text{gitt } y_{1}=0
+  \end{equation}
+  
+  \item 
+  Bruk {\it bakoverderivasjon} til
+  manuelt å beregne den numeriske deriverte av $u_{k}$, som betyr å finne
+  \begin{equation}
+     v_{k} =\frac{u_{k}-u_{k-1}}{T_s}, \quad  \forall ~
+            k{=}2,\ldots,6 \quad \text{gitt } v_{1}=0 \\
+  \end{equation}
+  \end{itemize}

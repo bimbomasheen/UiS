@@ -1,0 +1,39 @@
+\runningheader{Oppgave m), frivillig}{}{Side \thepage\ av \numpages}
+% ********************************************************
+% oppgave m) 
+% ********************************************************  
+\item
+  {\bf Kodebasert filtrering i {\tt MATLAB Function}-blokk i Simulink}
+
+  Sinusfunksjonen $x(t)$ i ligning~\eqref{eq:3}
+  oppgave~\ref{pkt:FIR_IIR}) kan skrives som 
+\begin{equation}
+  x(t) = 0.1 \sin(0.628t)+0.2, \quad \forall \quad 0<t<30 \label{eq:3_w}
+\end{equation}
+
+Åpne Simulink-skallfilen \fbox{\tt oving3\_a\_m\_skallfil.slx}, og gå videre
+til subsystemet \fbox{\tt Oppgave 3m)}. 
+Der ser du at sinusfunksjonen i ligning~\eqref{eq:3_w} allerede er implementert.
+Siden vi ikke har noen integrator i
+modellen er valget av numerisk løser ikke så viktig. Velg derfor bare
+{\it Eulers forovermetode} med tidsskritt   $T_{s}{=}0.5$, som tilsvarer
+en samplingsfrekvens   på $f_{s}{=}2$~Hz på samme måte som
+utgangspunktet i  oppgave~\ref{pkt:FIR_IIR}).
+ 
+\begin{itemize}
+\item  I \fbox{\tt  MATLAB  Function}-blokken skal du implementere
+  IIR-filteret gitt som
+  \begin{equation}
+    y(k) = (1-\alpha)  {\cdot}y(k-1) +  \alpha {\cdot}x(k) \tag{\ref{eq:12}}
+  \end{equation}
+  med \fbox{\tt alfa = 0.15}. 
+  For å gjøre et indeksskift $y(k)$ til $y(k-1)$ så benyttes
+  en \fbox{\tt Memory}-blokk fra {\tt Discrete}-mappen. Denne
+  forsinker signalet med ett tidsskritt før det mates inn som et
+  inngangssignal.  Husk å spesifisere riktig
+  {\tt Initial condition} for {\tt Memory}-blokken.
+
+  Simuler i 30 sekund, og vis at du får et
+  resultat som er identisk med det du fikk i oppgave~\ref{pkt:FIR_IIR}).
+
+\end{itemize}

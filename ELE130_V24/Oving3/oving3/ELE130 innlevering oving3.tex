@@ -1,0 +1,382 @@
+\documentclass[answers,11pt]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[norsk]{babel}
+\usepackage[T1]{fontenc}
+% \renewcommand{\rmdefault}{cmss}  % times new roman font
+\usepackage{verbatim,a4,amsmath}
+\usepackage{epsfig,amssymb,array,delarray}
+\usepackage{tabularx,enumerate,alltt,float}
+\usepackage{rotating,wrapfig,amsmath}
+\usepackage{longtable,color,boxedminipage}
+\usepackage{graphicx,lscape,ulem}
+\usepackage[most]{tcolorbox}
+\parindent0mm
+
+\usepackage[figurer/]{figurepath} 
+\usepackage{here,hyperref}
+
+\usepackage{listings}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\lstset{inputencoding=ansinew,
+  literate=  {ø}{{\o}}1%
+  {æ}{{\ae}}1%
+  {å}{{\aa}}1%
+  {Ø}{{\O}}1%
+  {Æ}{{\AE}}1%
+  {Å}{{\AA}}1%
+}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.6, 0.0}
+
+\textheight210mm
+\textwidth145mm
+\marginparsep0mm
+\oddsidemargin10mm
+\parskip 2mm plus 2mm minus 2mm % gir TeX litt fleksibilitet for sidebrekk
+
+\lstset{language=Matlab,
+  basicstyle = \tiny 
+}
+
+\begin{document}
+\renewcommand{\solutiontitle}{\noindent\textbf{}\par\noindent}
+\shadedsolutions
+\renewcommand{\thequestion}{\alph{question})}
+\renewcommand{\questionlabel}{\thequestion}
+\renewcommand{\solutiontitle}{\noindent\textbf{Svar:}\par\noindent}
+
+\renewcommand{\lstlistingname}{Kode}% Listing -> Kode
+\renewcommand{\thepage}{\arabic{page}}
+\cfoot{\thepage}
+
+\pagestyle{headandfoot}
+\runningheadrule       
+\firstpageheader{}{}{}
+
+\selectlanguage{norsk}
+\setlength{\parskip}{0.5cm}
+
+
+\vspace*{2cm}
+
+\begin{center}
+  {\Large \bf ELE130 Anvendt fysikk og matematikk i robotprogrammering}\\[2cm]
+  \vspace*{2cm}
+  {\LARGE \bf  Øving 3\\[5mm]
+    Introduksjon til
+    numerisk integrasjon,\\[1mm]
+    numerisk derivasjon 
+    og filtrering\footnote{Tilhørende
+      filer: \fbox{\tt oving3\_skallfiler.zip} og {\LaTeX}-mal i \fbox{\tt oving3.zip}. }}
+\end{center}
+
+\vspace*{3cm}
+\begin{tcolorbox}
+  {\Large \bf  Levert av ....}
+  
+\end{tcolorbox}
+
+
+
+\include{oving3_intro}  
+
+
+
+
+\begin{tcolorbox}[breakable, enhanced]
+  \section*{Forskjellig {\LaTeX}-kode}
+  Under er det gitt litt forskjellig kode som du kan kopiere inn i
+svarene under de oppgavene du gjør. Husk bare på å oppdatere
+bokmerkene til nye, unike navn, så slipper du feilreferering.
+
+  \begin{itemize}
+  \item    Resultatet fra scopet er vist i figur~\ref{fig:3a}. 
+    
+    \begin{figure}[H]
+      \centering
+      \hspace*{0mm}\scalebox{0.35}{\includegraphics{sett_inn_egen_fig.pdf}}
+      \caption{Resultat av blokkskjemaet i modellen. }
+      \label{fig:3a}
+    \end{figure}
+
+  \item Svaret er gitt i ligning~\eqref{eq:losn1}.
+    \begin{equation}
+      \label{eq:losn1}
+      y = 4
+    \end{equation}
+
+  \item Eksempel på bruk av {\tt align} er vist i
+    ligning~\eqref{eq:integral}.
+    For å bruke kommandoen {\tt \textbackslash uuline} må du bruke pakken
+    {\tt ulem} som {\tt \textbackslash usepackage\{ulem\}}.
+    \begin{align}
+      A   & = \int_{0}^{1} 2{\cdot}\sin(5{\cdot}t) dt \notag \\ 
+          & =    -\frac{2}{5}{\cdot}\cos(5{\cdot}t) \Biggl|_{0}^{1}  \notag \\
+          &=-\frac{2}{5}{\cdot}\cos(5{\cdot} 1)
+            -\Bigl(-\frac{2}{5}\cos(0)\Bigl) \notag\\
+          &= \uuline{0.287} \label{eq:integral}
+    \end{align}
+
+  \item Du finner også mye \LaTeX-kode i hver av .tex-filene til delxoppgavene.
+    
+  \end{itemize}
+\end{tcolorbox}
+
+
+
+
+
+\newpage
+
+\section*{Numerisk integrasjon og derivasjon}
+\label{side:1}
+
+
+\begin{enumerate}[a)]
+
+  % ********************************************************
+  % oppgave a)
+  % ********************************************************
+  \input{oving3_a}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+
+  % ********************************************************
+  % oppgave b)
+  % ********************************************************
+  \newpage
+  \input{oving3_b}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+
+  % ********************************************************
+  % oppgave c)
+  % ********************************************************
+  \newpage
+  \input{oving3_c}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+  
+  % ********************************************************
+  % oppgave d)
+  % ********************************************************
+  \newpage
+  \input{oving3_d}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+  
+  
+
+  % ********************************************************
+  % oppgave e)
+  % ********************************************************
+  \newpage
+  \input{oving3_e}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+3 \newpage
+  
+  \section*{Viktige egenskaper ved numerisk integrasjon og derivasjon}
+
+  % ********************************************************
+  % oppgave f)
+  % ********************************************************
+  \input{oving3_f}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+
+  % ********************************************************
+  % oppgave g)
+  % ********************************************************
+  \newpage
+  \input{oving3_g}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+  
+
+  \newpage
+
+  \label{side:2}
+  \section*{Effekten av samplingsfrekvensen $f_{s}$ ved måling}
+
+  % ********************************************************
+  % oppgave h)
+  % ********************************************************
+  \input{oving3_h}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+
+
+  
+  \newpage
+
+  \section*{Filtrering}
+  \label{side:3}
+  % ********************************************************
+  % oppgave i)
+  % ********************************************************
+  \input{oving3_i}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+
+  
+  % ********************************************************
+  % oppgave j)
+  % ********************************************************
+  \newpage
+  \input{oving3_j}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+
+  % ********************************************************
+  % oppgave k)
+  % ********************************************************
+  \newpage
+  \input{oving3_k}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+  
+  % ********************************************************
+  % oppgave l)
+  % ********************************************************
+  \newpage
+  \input{oving3_l}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+
+  % ********************************************************
+  % oppgave m)
+  % ********************************************************
+  \newpage
+  \input{oving3_m}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+  
+
+  % ********************************************************
+  % oppgave n)
+  % ********************************************************
+  \newpage
+  \input{oving3_n}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+  
+  % ********************************************************
+  % oppgave o)
+  % ********************************************************
+  \newpage
+  \input{oving3_o}  
+
+  \begin{tcolorbox}[breakable, enhanced]
+    \subsection*{Svar}
+    
+    
+  \end{tcolorbox}
+
+
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+

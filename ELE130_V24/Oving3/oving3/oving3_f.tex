@@ -1,0 +1,65 @@
+\runningheader{Oppgave f)}{}{Side \thepage\ av \numpages}
+
+\item[] I de neste to deloppgavene \ref{oppg:f})-\ref{oppg:g}) skal du
+  jobbe med følgende enkle signal
+\begin{equation}
+  \label{eq:u2}
+ \boxed{ u(t) = 1 }
+\end{equation}
+Hensikten med å bruke et såpass enkelt signal er å demonstrere 
+noen viktige egenskaper ved numerisk integrasjon og derivasjon.
+
+
+% ********************************************************
+% oppgave f) 
+% ********************************************************  
+\item
+{\bf Numerisk integrasjon av et signal som er forsterket}
+\label{oppg:f}
+
+I denne oppgaven skal du beregne følgende integral 
+\begin{equation}
+  \label{eq:4aa}
+  y(t) = K_{i}  \int_{0}^{t}  u(t)dt
+\end{equation}
+ved å bruke  funksjonen {\tt EulerForover} fra deloppgave~\ref{oppg:d}). 
+Parameteren $K_{i}$ er en forsterkningsfaktor som kan være et vilkårlig tall,
+positivt eller negativt. 
+I koden nedenfor er $K_{i}{=}0.4$, og det er implementert to forskjellig varianter av
+numerisk integrasjon. Den ene varianten er riktig, den
+andre er feil, og målet med oppgaven er at du skal finne ut hvilken
+som er riktig, og forklare hvorfor det er slik.
+\vspace*{-5mm}
+\begin{lstlisting}[caption={Kode for oppgaven.},
+language= Matlab, label=kode:1f, numbers=none] 
+% initialverdi
+y1(1) = 0;
+y2(1) = 0;
+
+Ki = 0.4;
+for k = ..
+    y1(k) =    EulerForover(y1(k-1), T_s, Ki*u(k-1));
+    y2(k) = Ki*EulerForover(y2(k-1), T_s,    u(k-1));
+end
+\end{lstlisting}
+\begin{itemize}
+\item Pass på at \fbox{\tt Ki = 0.4;} og kjør koden. Kan du allerede
+  nå ut fra kurvene finne ut om det er {\tt y\_1} eller {\tt y\_2} som er riktig?
+
+\item Endre parameteren $K_{i}$ til \fbox{\tt Ki = 1.4;} og kjør
+  koden på ny. Blir du noe klokere av det? 
+
+\item For å bli sikker på svaret er det smart å legge inn følgende kode
+  i linjen etter at {\tt u} blir definert.  
+
+\begin{lstlisting}[numbers=none]
+u(5:end) = 0;  % setter siste del av u som 0
+\end{lstlisting}
+
+Du kan nå endre $K_{i}$ mellom \fbox{\tt Ki = 0.4;} og \fbox{\tt
+  Ki = 1.4;}, og du vil forhåpetligvis oppdage hvilken som er den
+riktige.
+
+\item Hva er den egentlige grunnen til at den som er feil, er feil.
+  
+\end{itemize}

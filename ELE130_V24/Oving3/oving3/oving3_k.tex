@@ -1,0 +1,183 @@
+\runningheader{Oppgave k), frivillig}{}{Side \thepage\ av \numpages}
+% ********************************************************
+% oppgave k) 
+% ******************************************************** 
+\item \label{pkt:FIR_IIR}
+  {\bf Filtrering av ulike testsignal}
+  
+I denne oppgaven skal du bruke filterfunksjonene fra de forrige
+deloppgavene til å  filtrere følgende fire testsignal (formulert tidskontinuerlig):
+\begin{align}
+\text{impuls:} \quad  x_{1}(t) & =
+      \begin{cases}%
+  0 &\text{for } t<10\\
+  1 &\text{for } t=10\\
+   0& \text{for } t >10
+ \end{cases}\\
+\text{firkantpuls:} \quad  x_{2}(t) & =
+      \begin{cases}%
+  0 &\text{for } t<10\\
+  1 &\text{for } 10\leq t \leq 20\\
+   0& \text{for } t > 20
+ \end{cases}\\
+\text{sinussignal:} \quad   x_{3}(t) & = 0.1 \sin(2\pi 0.1 t)+0.2 \label{eq:3}\\
+  \text{sinussignal med støy:} \quad   x_{4}(t) &
+                                                  = 0.1 \sin(2\pi 0.1 t)+0.2 +w(t)\label{eq:3a}  
+\end{align}
+I skallfilen
+er den diskret tidsvektoren
+\fbox{\tt t}  basert på en samplingsfrekvens på
+  \begin{equation}
+    \label{eq:1511}
+      f_{s} = 2~\text{Hz}
+    \end{equation}
+    som gir en samplingstid på $T_{s}{=}0.5$ sekund.
+    Siden Nyquistfrekvensen ved denne samplingsfrekvensen er
+    \begin{equation}
+      \label{eq:1_fs}
+      f_{N}= 0.5{\cdot} f_{s} = 1~\text{Hz}
+    \end{equation}
+    så betyr det at vi sampler hurtig nok til å få med oss informasjonen fra
+    sinussignalene gitt i ligningene~\eqref{eq:3} og \eqref{eq:3a},
+    siden begge har en svingefrekvensen på $f{=}0.1$ Hz. 
+    Videre er det i skallfilen gitt kode for de fire signalene
+    \fbox{\tt x1} til  \fbox{\tt  x4} hvor bruker vi sammenhengen 
+  \begin{equation}
+    \label{eq:7}
+    k{\cdot}T_{s} = t_{k}
+  \end{equation}
+  for å bestemme hvilken indeks $k$ som hører til et gitt tidspunkt.
+  Siden vi jobber med Matlabindekser legger
+  vi til 1 i beregningen. Dersom du velger et tidsskritt som ikke gir
+  heltallsverdier av $k$, så må du bruke {\tt round}-funksjonen som
+  \fbox{\tt k = round(t\_impuls/T\_s+1);}.
+
+  Siden koden for FIR- og IIR-filteret er basert på variabelen {\tt x}, 
+  og ikke {\tt x1}, {\tt x2}, {\tt x3} eller {\tt x4} som vi nettopp
+  har definert, så velger du  hvilket signal du vil bruke der
+  hvor det i skallfilen står:
+  
+\begin{lstlisting}[caption={Syntaks for å velge hvilket signal som
+    skal filtreres.},  language= Matlab,   label=kode:velg,
+numbers=none] 
+%------------------------------------------------------
+% Velg hvilket signal som skal filtreres. 
+x = x1;
+% For x1 og x2 er det smart å bruke kurveform = ':x';
+% For x3 og x4 er det smart å bruke kurveform = '-';
+kurveform = '-';
+%------------------------------------------------------
+\end{lstlisting}
+
+  
+Ferdigstill det som mangler i skallfilen, og gjør deretter følgende
+oppgaver, hvor du for hver oppgave tar med resultatfigurene i innleveringen din.
+
+\subsubsection*{\bf Filtrering av impulsen $x_{1}(t)$}
+
+  Hensikten med dette signalet er
+  å demonstrer hvorfor det heter FIR og IIR. Det betyr at du vil se at
+  impulsen gir en  respons som blir 0 etter en viss tid for
+  FIR-filteret ({\it finite}),  og en respons som aldri blir 0 for
+  IIR-filteret ({\it infinite}). 
+
+  \begin{itemize}
+  \item Bruk \fbox{\tt M = 10}  og  \fbox{\tt alfa = 0.3} og kjør
+    koden. Trykk inn på
+    de røde og grønne linjene til hhv. FIR- og IIR-filteret rundt
+    $t{\approx}30$ sekund og les av verdien. Ta med figuren i
+    innleveringen din. 
+  \item Er det logisk at maksimalverdien av  $y_{k,FIR}$  er 0.1 
+    når \fbox{\tt M = 10}  mens maksimalverdien av   $y_{k,IIR}$ er 0.3 når
+    \fbox{\tt alfa = 0.3}? Begrunn svaret.
+  \end{itemize}
+
+\subsubsection*{\bf Filtrering av firkantpulsen $x_{2}(t)$}
+
+  Hensikten med dette signalet er å
+  demonstrere {\it dynamikken} til filteret, altså hvor raskt det
+  svinger seg inn til ny stasjonær verdi gitt at inngangen endres som
+  et sprang. Husk at det positive spranget går ved
+  $t_{\text{sprang}}{=}10$~sekund, og det negative spranget går ved
+  $t_{\text{sprang}}{=}20$~sekund.
+  
+ 
+  \begin{itemize}
+  \item Bruk \fbox{\tt M = 10}  og  \fbox{\tt alfa = 0.3} og kjør
+    koden. Forklar med utgangspunkt i ligningen for FIR-filteret
+    hvorfor responsen stiger som en lineær kurve før den
+    til slutt flater ut.
+
+  \item Bruk sammenhengen
+    \begin{equation}
+      M =\frac{t_{\text{FIR}}}{T_{s}}+ 1
+    \end{equation}
+    til å anslå filtervinduets lengde $t_{\text{FIR}}$~[s].  Hvordan
+    relateres verdien av $t_{\text{FIR}}$ til responsen i FIR-filteret?
+    
+  \item Bruk sammenhengen
+    \begin{equation}
+  \label{eq:12ny}
+  \boxed{\alpha = \frac{T_{s}}{\tau + T_{s}} }
+\end{equation}
+til å anslo  tidskonstanten $\tau$ for IIR-filteret. Hvordan
+relateres verdien av $\tau$ til responsen i IIR-filteret?
+   
+
+  \item Hvordan endres dynamikken (hurtigheten) til IIR-filteret og
+    selve responsen til FIR-filteret dersom du endrer til
+    \fbox{\tt M = 15} og  \fbox{\tt alfa = 0.15}?
+
+\end{itemize}
+
+\newpage
+
+\subsubsection*{\bf Filtrering av sinussignalet $x_{3}(t)$}
+
+  Hensikten med dette signalet er å
+  vise hvordan sinussignalet endres gjennom filteret, altså hvor mye
+  amplituden blir redusert og hvor stor faseforskyvning er som
+  funksjon av filterparametrene.   I denne oppgaven
+  kan du med fordel endre kurveformen til \fbox{\tt '-'} slik 
+  at kurvene blir ``renere''. 
+ Gitt at resposnene i FIR- og IIR-filteret kan formuleres
+    tidskontinuerlig som 
+    \begin{align}
+      \label{eq:11}
+      y_{FIR}(t) & = Y_{FIR}{\cdot} \sin(2\pi f t + \varphi_{FIR}) \\
+      y_{IIR}(t) & = Y_{IIR} {\cdot}\sin(2\pi f t + \varphi_{IIR}) 
+    \end{align}
+
+  \begin{itemize}
+  \item  Bruk \fbox{\tt M = 15}  og  \fbox{\tt alfa = 0.15} og kjør
+    koden. Hvor stor er amplitudene $Y_{FIR}$ og $Y_{IIR}$?
+  \item Hvor stor er faseforskyvningen mellom
+    innsignalet $x_{3}(t)$ og de to filtrerte signalene. Det vil si,
+    bestem $\varphi_{FIR}^{\circ}$ og
+    $\varphi_{IIR}^{\circ}$. (oppgitt i grader) 
+  
+  \item Øk samplingsfrekvensen $f_s$ til \fbox{\tt f\_s = 4}.
+    Hvordan påvirker dette filtreringen? Hva er forklaringen
+  på det som skjer? 
+\item Behold \fbox{\tt f\_s = 4}. Hva må du gjøre med
+  $M$ og $\alpha$ for å få et resultat som ligner på det du fikk når
+  \fbox{\tt f\_s = 2}?
+  
+\item Sett \fbox{\tt M = k} inne i
+  for-løkken, og forklar hva som skjer i FIR-filteret.
+
+
+\end{itemize}
+
+\subsubsection*{\bf Filtrering av sinussignalet med støy $x_{4}(t)$}
+   Hensikten med dette signalet er å vise at hvordan
+  du kan filtrere bort støyen og helst sitte igjen med sinussignalet som
+  ligger i bunn.   
+
+  \begin{itemize}
+  \item 
+  Behold \fbox{\tt f\_s = 4} og finn de $M$ og $\alpha$-verdiene som
+  du synes fjerner støy på best mulig måte samtidig som selve
+  sinussignalet beholdes i  størst mulig grad. Her er det ingen feil svar.
+  \end{itemize}
+  
