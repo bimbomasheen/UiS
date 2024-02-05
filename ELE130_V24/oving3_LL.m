@@ -1,6 +1,7 @@
 %-----------------------------------------------------------------------
 %% a) foregår i Simulink
 
+%%
 
 %-----------------------------------------------------------------------
 %% b) Numerisk integrasjon og derivasjon i Matlab
@@ -9,8 +10,8 @@ clear; close all; clc
 
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-% Starter først med "fasiten", hvor vi definerer kontinuerlig "tid" 
-% og analytiske uttrykk for u(t), y(t) og v(t) tilsvarende 
+% Starter først med "fasiten", hvor vi definerer kontinuerlig "tid"
+% og analytiske uttrykk for u(t), y(t) og v(t) tilsvarende
 % ligningene (3), (4) og (5) i oppgaven. Det vil si:
 %
 % u(t) = 2*t^2
@@ -18,34 +19,35 @@ clear; close all; clc
 % v(t) = 4*t, derivert av u(t)
 %
 % Liten verdi på "delta_t" her gir tilnærmet kontinuerlig tid.
-% Benytter syntaks "tid" for å skille det fra diskret vektor "t" 
-% som brukes for t(k).  
+% Benytter syntaks "tid" for å skille det fra diskret vektor "t"
+% som brukes for t(k).
 delta_t = 0.0001;
 t_slutt = 3;
-tid = 0:delta_t:t_slutt; 
+tid = 0:delta_t:t_slutt;
 
 % Benytter syntaks "u_t", "y_t" og "v_t" for å fremheve at de
-% analytiske uttrykkene er tidskontinuerlige. 
+% analytiske uttrykkene er tidskontinuerlige.
 % Husk elementvise operasjoner!!!!!!!!
 
-u_t = ..;         % analytisk uttrykk for u(t)
-y_t = ..;         % analytisk uttrykk for y(t)
-v_t = ..;         % analytisk uttrykk for v(t)
+u_t = 2*tid.^2;         % analytisk uttrykk for u(t)
+y_t = 2/3*tid.^3;         % analytisk uttrykk for y(t)
+v_t = 4*tid;         % analytisk uttrykk for v(t)
+
 
 % Plotter for å sjekke at det ser riktig ut
 figure
 subplot(3,1,1)
-plot(.., y_t, 'b-')    % "fasit" analytisk uttrykk
+plot(tid, y_t, 'b-')    % "fasit" analytisk uttrykk
 grid on
 title('Signal $y(t)$ og numerisk integrert $y_{k}$')
 
 subplot(3,1,2)
-plot(.., u_t, 'k-')
+plot(tid, u_t, 'k-')
 grid on
 title('Signal $u(t)$ og målinger $u_{k}$')
 
 subplot(3,1,3)
-plot(.., v_t, 'r-')      % "fasit" analytisk uttrykk
+plot(tid, v_t, 'r-')      % "fasit" analytisk uttrykk
 grid on
 xlabel('tid [s]')
 title('Signal $v(t)$ og numerisk derivert $v_{k}$')
@@ -56,39 +58,41 @@ title('Signal $v(t)$ og numerisk derivert $v_{k}$')
 % ved å definere en tidsvektor t = [0, Ts, 2*Ts, ..., t_slutt]
 % Benytter syntaks "t" og "u" for de diskret vektorene $t_k$ og $u_k$.
 % Indeksering av t og u blir da som t(k) og u(k)
-T_s = ..;      % samme Ts som i oppgave a) i Simulink
+T_s = 0.4;              % samme Ts som i oppgave a) i Simulink
 t_slutt = 3;
-t = ..;        % diskret tidsvektor $t_k$
-u = 2*t.^2;    % diskret målinger $u_k$
+t = 0:T_s:t_slutt;      % diskret tidsvektor $t_k$
+u = 2*t.^2;             % diskret målinger $u_k$
 
 
 % Initialverdier integrasjon
-y_EulerF(1) = ..
-y_EulerB(1) = ..
-y_Trapes(1) = ..
+y_EulerF(1) = 0;
+y_EulerB(1) = 0;
+y_Trapes(1) = 0;
 
 % Initialverdier derivasjon
-v_bakover(1) = ..
-v_senter(1) = ..
+v_bakover(1) = 0;
+v_senter(1) = 0;
 
-for ..
+for k = 2:length(u)
     % - - - - Integrasjonsrutinene - - - -
-    y_EulerF(k) = ..
-    y_EulerB(k) = ..
-    y_Trapes(k) = ..
+    y_EulerF(k) = y_EulerF(k-1) + T_s * u(k-1);
+    y_EulerB(k) = y_EulerB(k-1) + T_s * u(k);
+    y_Trapes(k) = y_Trapes(k-1) + T_s * 0.5 *(u(k-1)+u(k));
 
     % - - - - Derivasjonsrutinene - - - -
-    v_bakover(k) = ..
-    v_forover(k-1) = ..
-    v_senter(k-1) = ..   % pass på denne....
+    v_bakover(k) = (u(k)-u(k-1)) / T_s;
+    v_forover(k-1) = (u(k)-u(k-1)) / T_s;
+    if k > 2
+        v_senter(k-1) = (u(k)-u(k-2)) / (2*T_s);
+    end
 end
 
 % Går tilbake til figuren, starter med hold on
 subplot(3,1,1)
 hold on
-plot(.., y_EulerF, 'b:o')
-plot(.. y_EulerB, 'b:v')
-plot(.. y_Trapes, 'b:.','MarkerSize',15)
+plot(t(1:k), y_EulerF, 'b:o')
+plot(t(1:k), y_EulerB, 'b:v')
+plot(t(1:k), y_Trapes, 'b:.','MarkerSize',15)
 legend('Analytisk','Eulers forovermetode', ...
     'Eulers bakovermetode','Trapesmetoden',...
     'Location','northwest')
@@ -99,18 +103,28 @@ plot(t, u, 'ko')
 
 subplot(3,1,3)
 hold on
-plot(.., v_bakover, 'r:o')
-plot(.., v_forover, 'r:v')
-plot(.., v_senter, 'r:.','MarkerSize',15)
+plot(t(1:k), v_bakover, 'r:o')
+plot(t(1:k-1), v_forover, 'r:v')
+plot(t(1:k-1), v_senter, 'r:.','MarkerSize',15)
+
+% Calculate the index k for t(k)=2
+k = round(2 / T_s) + 1;
+
+% Plot the value of v_bakover(k) at t(k)=2
+subplot(3,1,3)
+plot(t(k), v_bakover(k), 'go', 'MarkerSize', 10)
+
+% Annotate the value of v_bakover at t(k)=2
+text(t(k), v_bakover(k), [' (' num2str(t(k)) ', ' num2str(v_bakover(k)) ')'])
+
 axis('tight')
 legend('Analytisk', 'Bakoverderivasjon',...
     'Foroverderivasjon',...
     'Senterderivasjon',...
+    'v_bakover(2)',...
     'Location','northwest')
 
-
-
-
+%{
 %-----------------------------------------------------------------------
 %% c) foregår for hånd
 
@@ -256,7 +270,7 @@ u = ..;
 % initialverdi
 v1(..) = ..;   % Bakoverderivasjon
 v2(..) = ..;     % Foroverderivasjon
-v3(..) = ..;     % Senterderivasjon 
+v3(..) = ..;     % Senterderivasjon
 
 for k = ..:length(t)
     v1(k)   = Derivasjon(u(k-2:k), T_s, metode='Bakover');
@@ -397,7 +411,7 @@ plot(t, v1, 'r:o')
 grid
 title('Signal {\tt v1}')
 legend('Bakoverderivasjon av signal uten st{\o}y',...
-       'location','northeast')
+    'location','northeast')
 ylim([-0.5 0.5])
 
 subplot(3,2,4)
@@ -405,7 +419,7 @@ plot(t, v2, 'r:o')
 grid
 title('Signal {\tt v2}')
 legend('Bakoverderivasjon av signal med st{\o}y',...
-       'location','northeast')
+    'location','northeast')
 ylim([-0.1/T_s 0.1/T_s])
 
 subplot(3,2,5)
@@ -416,8 +430,8 @@ xlabel('tiden $t$ [s]')
 grid
 title('Signal {\tt y1} og {\tt y2}')
 legend('Eulers forovermetode av signal uten st{\o}y',...
-       'Eulers forovermetode av signal med st{\o}y',...
-       'location','best')
+    'Eulers forovermetode av signal med st{\o}y',...
+    'location','best')
 
 subplot(3,2,6)
 plot(t(1:end-1), v3, 'r:.','markersize',15)
@@ -425,7 +439,7 @@ title('Signal {\tt v3}')
 xlabel('tiden $t$ [s]')
 grid
 legend('Senterderivasjon av signal med st{\o}y',...
-       'location','northeast')
+    'location','northeast')
 ylim([-0.1/T_s 0.1/T_s])
 
 sgtitle(['Tidsskritt $T_s$=',num2str(T_s),' sekund'])
@@ -455,9 +469,9 @@ f_s = 0.6;     % [Hz], samplingsfrekvens, endre på denne
 T_s = ..;   % [sek], sampletid, beregnet fra f_s
 t = 0:T_s:t_slutt;
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Lager et "analogt" og et diskret signal av de fem signalene
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x1_a = sin(2*pi*f_1*tid);   % "analogt" signal
 x1_d = sin(2*pi*f_1*t);     % diskret signal
 
@@ -473,8 +487,8 @@ x4_d = sin(2*pi*f_4*t);
 x5_a = sin(2*pi*f_5*tid);
 x5_d = sin(2*pi*f_5*t);
 
-% Lager et sammensatt signal av alle 
-% de 5 signalene 
+% Lager et sammensatt signal av alle
+% de 5 signalene
 x_a = x1_a + x2_a + x3_a + x4_a + x5_a;
 x_d = x1_d + x2_d + x3_d + x4_d + x5_d;
 
@@ -530,7 +544,7 @@ T_s = 1/f_s;
 t_slutt = 10;
 t = 0:T_s:t_slutt;
 
-% Målesignalet x(k) er bare støy  
+% Målesignalet x(k) er bare støy
 rng(8)
 x = rand(1,length(t));
 
@@ -562,7 +576,7 @@ T_s = 1/f_s;
 t_slutt = 10;
 t = 0:T_s:t_slutt;
 
-% Målesignalet x(k) er bare støy  
+% Målesignalet x(k) er bare støy
 rng(2)
 x = rand(1,length(t));
 
@@ -603,7 +617,7 @@ T_s = 1/f_s;
 t_slutt = 10;
 t = 0:T_s:t_slutt;
 
-% målesignalet x(k) er bare støy  
+% målesignalet x(k) er bare støy
 rng(8)
 x = rand(1,length(t));
 
@@ -634,7 +648,7 @@ T_s = 1/f_s;
 t_slutt = 10;
 t = 0:T_s:t_slutt;
 
-% Målesignalet x(k) er bare støy  
+% Målesignalet x(k) er bare støy
 rng(8)
 x = rand(1,length(t));
 
@@ -669,23 +683,23 @@ legend('signal $x_k$',...
 %% k) Filtrering av ulike testsignal
 clear; close all; clc
 
-% Bestemmer t(k) 
+% Bestemmer t(k)
 f_s = 2;      % samplingsfrekvens Hz
 T_s = 1/f_s;  % samplingstid sekund
 t_slutt = 30;
 t = 0:T_s:t_slutt;
 
-% - - - - - - - - - - - - - - - - - - - - 
-% x1, impuls 
-% - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - -
+% x1, impuls
+% - - - - - - - - - - - - - - - - - - - -
 x1 = zeros(1,length(t));
 t_impuls = 10;        % tidspunkt impuls
 k = t_impuls/T_s+1;   % k*Ts=t_impuls, '+1' pga Matlabindeks
 x1(k) = 1;            % en 1'er ved t=t_impuls sekund
 
-% - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - -
 % x2, firkantpuls (sprang opp og ned)
-% - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - -
 x2 = zeros(1,length(t));
 t_sprang1 = 10;        % tidspunkt sprang start
 t_sprang2 = 20;        % tidspunkt sprang slutt
@@ -693,19 +707,19 @@ k1 = t_sprang1/T_s+1;  % k1*Ts=t_sprang1
 k2 = t_sprang2/T_s+1;  % k2*Ts=t_sprang2
 x2(k1:k2) = 1;
 
-% - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - -
 % x3, sinus med frekvens f=0.1 Hz
-% - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - -
 f = 0.1;
 x3 = 0.1*sin(2*pi*f*t) + 0.2;
 
-% - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - -
 % x4, sinus med støy
-% - - - - - - - - - - - - - - - - - - - - 
+% - - - - - - - - - - - - - - - - - - - -
 x4 = x3 + 0.03*randn(1,length(t));
 
 % ------------------------------------------------
-% Velg hvilket signal som skal filtreres. 
+% Velg hvilket signal som skal filtreres.
 x = x1;
 % For x1 og x2 er det smart å bruke kurveform = ':x';
 % For x3 og x4 er det smart å bruke kurveform = '-';
@@ -805,13 +819,13 @@ ylim(yl*1.1)
 
 
 %-----------------------------------------------------------------------
-%% n) Demonstrasjon av sampling og nedfolding  
+%% n) Demonstrasjon av sampling og nedfolding
 %
 % Innhold:
 %  - Visualisering av sampling i "sanntid"
 %  - Velg frekvens f og samplingsfrekvens f_s fra meny
-% 
-% --------------------------------------------------------- 
+%
+% ---------------------------------------------------------
 
 clear; close all; clc
 
@@ -822,7 +836,7 @@ subplot(3,1,1)
 % Høyeste frekvens [Hz] på signalet y(t) som skal samples.
 % Juster gjerne på denne og studer effekten
 % --------------------------------------------------------
-f = 4.2;     
+f = 4.2;
 % --------------------------------------------------------
 T_p = 1/f;           % periode for signalet
 delta_t = T_p/20;    % kontinuerlig tid består av 20 punkter i en periode
@@ -833,9 +847,9 @@ tid = 0:delta_t:t_slutt;  % kontinuerlig tid for "analogt" signal
 % Velg hvilket signal du vil sample
 % Du kan også lage helt egne signal om du vil.
 %------------------------------------------------------------
-y_t = sin(2*pi*f*tid);   
-%y_t = sin(2*pi*f*tid) + sin(2*pi*0.5*f*tid);   
-%y_t = sin(2*pi*f*tid) + sin(2*pi*0.5*f*tid) + sin(2*pi*0.1*f*tid);   
+y_t = sin(2*pi*f*tid);
+%y_t = sin(2*pi*f*tid) + sin(2*pi*0.5*f*tid);
+%y_t = sin(2*pi*f*tid) + sin(2*pi*0.5*f*tid) + sin(2*pi*0.1*f*tid);
 
 
 % Plotter i sin helhet det analoge signalet yt) som skal samples
@@ -868,14 +882,14 @@ for i = 1:length(tid)
         'samplingsfrekvens $f_s=',num2str(1/Ts), '$'])
 
     % Sjekker om vi skal sample
-    if tid(i) >= t_k(k) 
+    if tid(i) >= t_k(k)
         % tar en måling y(k) av analogt signal y_t
         y(k) = y_t(i);
         k = k + 1;
     end
     plot(t_k(1:k-1),y(1:k-1),'bo')
     drawnow
-    
+
     % benytter hold off for å unngå at figuren består av 100-vis av linjer
     hold off
 
@@ -893,21 +907,21 @@ plot(t_k(1:k-1),y(1:k-1),'b-')
 
 
 
-% --------------------------------------------------------- 
-%% o)   
+% ---------------------------------------------------------
+%% o)
 %
 % Innhold:
 %  - Oppsamling ved bruk av interp-funksjonen
 %  - beregning av sinus med sind-funksjonen
-% 
-% --------------------------------------------------------- 
+%
+% ---------------------------------------------------------
 
 
 clear; close all; clc
 
 % Fakta om vinkelmålingen
 delta_phi = 220;      % antall grader mellom hver måling
-T_s = 0.2;            % tidsskritt mellom hver måling 
+T_s = 0.2;            % tidsskritt mellom hver måling
 w_d = delta_phi/T_s;  % vinkelhastighet i grader/s
 noRounds = 10;         % antall runder rotasjon
 
@@ -916,7 +930,7 @@ VinkelPosMotorB = 0:delta_phi:360*noRounds;
 noMeas = length(VinkelPosMotorB);   % antall målinger
 t_k = 0:T_s:(noMeas-1)*T_s;   % tidsvektor
 
-% Beregner sinusverdien av vinkelposisjonen 
+% Beregner sinusverdien av vinkelposisjonen
 % gitt som y(t) = sin(w*t)
 
 y = sind(w_d*t_k);    % sind() for degrees
@@ -939,8 +953,8 @@ xlabel('tid [s]')
 
 uiwait(msgbox('Trykk OK for å oppsample'))
 
-% Rekonstruerer signalet ved å legge inn 
-% n målinger og tidspunkt mellom hver 
+% Rekonstruerer signalet ved å legge inn
+% n målinger og tidspunkt mellom hver
 % samplet måling og måletidspunkt. Bruker interp-kommando.
 n = 7;
 VinkelPosMotorB_up = interp(VinkelPosMotorB,n);
@@ -965,3 +979,4 @@ plot(t_k,y,'bo:')
 xlabel('tid [s]')
 title('Reell rotasjon, $y_k=\sin(\omega_d{\cdot} t_{k,up})$')
 
+%}
