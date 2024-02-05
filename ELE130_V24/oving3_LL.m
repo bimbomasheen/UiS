@@ -124,7 +124,7 @@ legend('Analytisk', 'Bakoverderivasjon',...
     'v_bakover(2)',...
     'Location','northwest')
 
-%{
+
 %-----------------------------------------------------------------------
 %% c) foregår for hånd
 
@@ -138,15 +138,15 @@ clear;close all;clc
 
 % Diskret tids- og signalvektor t(k) og u(k).
 % Kopier tilsvarende kode fra deloppgave b).
-T_s = ..;
+T_s = 0.4;
 t_slutt = 3;
-t = ..;
-u = ..;
+t = 0:T_s:t_slutt;
+u = 2*t.^2;
 
 % initialverdi
-y(1) = ..;
-for ..
-    y(k) = EulersForover(..);
+y(1) = 0;
+for k = 2:length(u)
+    y(k) = EulersForover(y(k-1), T_s, u(k-1));
 end
 
 figure
@@ -168,20 +168,20 @@ clear;close all;clc
 
 % Diskret tids- og signalvektor t(k) og u(k).
 % Kopier tilsvarende kode fra deloppgave b).
-T_s = ..;
+T_s = 0.2;              % samme Ts som i oppgave a) i Simulink
 t_slutt = 3;
-t = ..;
-u = ..;
+t = 0:T_s:t_slutt;      % diskret tidsvektor $t_k$
+u = 2*t.^2;
 
 % initialverdi
-y1(1) = ..;
-y2(1) = ..;
-y3(1) = ..;
+y1(1) = 0;
+y2(1) = 0;
+y3(1) = 0;
 
-for ..
-    y1(k) = Integrasjon(y1(k-1), T_s, .. , metode='EulersForover');
-    y2(k) = Integrasjon(y2(k-1), T_s, .. , metode='EulersBakover');
-    y3(k) = Integrasjon(y3(k-1), T_s, .. , metode='Trapes');
+for k = 2:length(u)
+    y1(k) = Integrasjon(y1(k-1), T_s, u(k-1):u(k) , metode='EulersForover');
+    y2(k) = Integrasjon(y2(k-1), T_s, u(k-1):u(k) , metode='EulersBakover');
+    y3(k) = Integrasjon(y3(k-1), T_s, u(k-1):u(k) , metode='Trapes');
 end
 
 figure
@@ -225,7 +225,7 @@ legend('Eulers forovermetode', 'Eulers bakovermetode',...
 
 
 
-
+%{
 %-----------------------------------------------------------------------
 %% e) Numerisk derivasjon som Matlab-funksjon
 clear;close all;clc
@@ -254,7 +254,7 @@ plot(t, v, 'r:o')
 grid
 title('$v_{k}$, numerisk derivert av $u_{k}$')
 legend('Bakoverderivasjon')
-
+%}
 
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 %% e) generell funksjon for numerisk derivasjon (frivillig)
@@ -262,17 +262,17 @@ clear; close all;clc
 
 % Diskret tids- og signalvektor t(k) og u(k).
 % Kopier tilsvarende kode fra deloppgave b).
-T_s = ..;
+T_s = 0.4;              % samme Ts som i oppgave a) i Simulink
 t_slutt = 3;
-t = ..;
-u = ..;
+t = 0:T_s:t_slutt;      % diskret tidsvektor $t_k$
+u = 2*t.^2;
 
 % initialverdi
-v1(..) = ..;   % Bakoverderivasjon
-v2(..) = ..;     % Foroverderivasjon
-v3(..) = ..;     % Senterderivasjon
+v1(1) = 0;      % Bakoverderivasjon
+v2(1) = 0;      % Foroverderivasjon
+v3(1) = 0;      % Senterderivasjon 
 
-for k = ..:length(t)
+for k = 3:length(t)
     v1(k)   = Derivasjon(u(k-2:k), T_s, metode='Bakover');
     v2(k-1) = Derivasjon(u(k-2:k), T_s, metode='Forover');
     v3(k-1) = Derivasjon(u(k-2:k), T_s, metode='Senter');
@@ -313,8 +313,8 @@ u = ones(1,length(t));
 y1(1) = 0;
 y2(1) = 0;
 
-Ki = 0.4;
-for k = ..
+Ki = 1.4;
+for k = 2:length(u)
     y1(k) =    EulersForover(y1(k-1), T_s, Ki*u(k-1));
     y2(k) = Ki*EulersForover(y2(k-1), T_s,    u(k-1));
 end
@@ -358,7 +358,7 @@ legend('{\tt y1(k) = EulersForover(y1(k-1), T\_s, Ki*u(k-1))}',...
 
 
 
-
+%{
 %-----------------------------------------------------------------------
 %% g) Effekten av støy ved numerisk derivasjon
 clear;close all;clc
@@ -447,7 +447,7 @@ sgtitle(['Tidsskritt $T_s$=',num2str(T_s),' sekund'])
 
 
 
-
+%}
 
 %-----------------------------------------------------------------------
 %% h) Fenomenet nedfolding
@@ -466,7 +466,7 @@ tid = 0:delta_t:t_slutt;  % liten delta_t gir "kontinuerlig" tid
 
 % Bestemmer bestemmer t(k) basert på samplingsfrekvens
 f_s = 0.6;     % [Hz], samplingsfrekvens, endre på denne
-T_s = ..;   % [sek], sampletid, beregnet fra f_s
+T_s = 1/f_s;   % [sek], sampletid, beregnet fra f_s
 t = 0:T_s:t_slutt;
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -533,7 +533,7 @@ title(['Med $f_s{=}$',num2str(f_s),' Hz er maksimal',...
 
 
 
-
+%{
 %-----------------------------------------------------------------------
 %% i) FIR-filter
 clear; close all; clc

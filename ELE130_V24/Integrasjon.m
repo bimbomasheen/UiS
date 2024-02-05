@@ -7,13 +7,13 @@ arguments
 end
 
 if strcmp(options.metode,'EulersForover')
-    % fyll inn
+    IntValueNew = IntValueOld + Timestep * FunctionValues(2);
 
 elseif strcmp(options.metode,'EulersBakover')
-    % fyll inn
+    IntValueNew = IntValueOld + Timestep * FunctionValues(1);
 
 elseif strcmp(options.metode,'Trapes')
-    % fyll inn
+    IntValueNew = IntValueOld + Timestep * 0.5 * (FunctionValues(1) + FunctionValues(2));
 
 else
     errordlg('Feil metode spesifisert')

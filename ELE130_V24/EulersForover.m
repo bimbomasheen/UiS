@@ -1,5 +1,5 @@
 function IntValueNew = EulersForover(IntValueOld, Timestep, FunctionValue)
 
-% fyll inn
+IntValueNew = IntValueOld + Timestep * FunctionValue;
 
 end

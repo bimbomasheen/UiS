@@ -6,13 +6,13 @@ arguments
 end
 
 if strcmp(options.metode,'Bakover')
-    % fyll inn
+    Sekant = (FunctionValues(3) - FunctionValues(2))/Timestep;
 
 elseif strcmp(options.metode,'Forover')
-    % fyll inn
+    Sekant = (FunctionValues(3) - FunctionValues(2))/Timestep;
 
 elseif strcmp(options.metode,'Senter')
-    % fyll inn
+    Sekant = (FunctionValues(3) - FunctionValues(1))/(2*Timestep);
 
 else
     errordlg('Feil metode spesifisert')
