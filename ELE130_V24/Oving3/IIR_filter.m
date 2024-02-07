@@ -1,5 +1,5 @@
 function[FilteredValue] = IIR_filter(OldFilteredValue,Measurement,Parameter)
 
-% fyll inn
+FilteredValue = (1-Parameter) * OldFilteredValue + Parameter * Measurement;
 
 end

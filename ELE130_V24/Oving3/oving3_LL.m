@@ -533,7 +533,7 @@ title(['Med $f_s{=}$',num2str(f_s),' Hz er maksimal',...
 
 
 
-%{
+
 %-----------------------------------------------------------------------
 %% i) FIR-filter
 clear; close all; clc
@@ -549,12 +549,11 @@ rng(8)
 x = rand(1,length(t));
 
 % initialisering
-y_FIR(1) = ..;
+y_FIR(1) = x(1);
 
-for k = ..
-    M = 10;
-    % juster på M her
-    y_FIR(k) = ..
+M = 10;
+for k = 1:length(t)
+    y_FIR(k) = FIR_filter(x(k),M);
 end
 
 figure
@@ -581,15 +580,15 @@ rng(2)
 x = rand(1,length(t));
 
 % initialisering
-y_FIR1(1) = ..
-y_FIR2(1) = ..
-y_FIR3(1) = ..
+y_FIR1(1) = x(1);
+y_FIR2(1) = x(1);
+y_FIR3(1) = x(1);
 M = [10, 30, 50];
 
 for k = 2:length(t)
-    y_FIR1(k) = FIR_filter(x(1:k),M(1));
-    y_FIR2(k) = FIR_filter(x(1:k),M(2));
-    y_FIR3(k) = FIR_filter(x(1:k),M(3));
+    y_FIR1(k) = FIR_filter(x(1:k),k);
+    y_FIR2(k) = FIR_filter(x(1:k),k);
+    y_FIR3(k) = FIR_filter(x(1:k),k);
 end
 
 figure
@@ -622,11 +621,12 @@ rng(8)
 x = rand(1,length(t));
 
 % initialisering
-y_IIR(1) = ..
-alfa = 0.05;
+y_IIR(1) = x(1);
+alfa = 2;
 
 for k = 2:length(t)
-    y_IIR(k) = ..
+    %y_IIR(k) = (1-alfa) * y_IIR(k-1) + alfa * x(k);
+    y_IIR(k) = IIR_filter(y_IIR(k-1),x(k),alfa);
 end
 
 figure
@@ -653,9 +653,9 @@ rng(8)
 x = rand(1,length(t));
 
 % initialisering
-y_IIR1(1) = ..
-y_IIR2(1) = ..
-y_IIR3(1) = ..
+y_IIR1(1) = x(1);
+y_IIR2(1) = x(1);
+y_IIR3(1) = x(1);
 alfa = [0.05, 0.1, 0.2];
 
 for k = 2:length(t)
@@ -678,7 +678,7 @@ legend('signal $x_k$',...
     ['$y_{k,IIR}$, $\alpha=$ ',num2str(alfa(3))])
 
 
-
+%{
 %-----------------------------------------------------------------------
 %% k) Filtrering av ulike testsignal
 clear; close all; clc
